@@ -89,6 +89,14 @@ ui <- fluidPage(
              br(),
              h4("Results | Total ETIs Per Task"),
              tableOutput("total_eti_table")
+    ),
+    # Footer
+    tags$footer(
+      tags$p(
+        "Author: Isabel Duarte | ",
+        tags$a(href = "https://github.com/patterninstitute/FTE_calculator", "View on GitHub"),
+        style = "text-align: center; padding: 10px; font-size: 14px; background-color: #f8f9fa; width: 100%; position: absolute; bottom: 0;"
+      )
     )
   )
 )
