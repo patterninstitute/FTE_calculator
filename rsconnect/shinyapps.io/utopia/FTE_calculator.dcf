@@ -5,7 +5,7 @@ account: utopia
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14062262
-bundleId: 9836006
+bundleId: 9836726
 url: https://utopia.shinyapps.io/FTE_calculator/
 version: 1
 asMultiple: FALSE

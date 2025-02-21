@@ -72,7 +72,7 @@ ui <- fluidPage(
   ),
   div(class = "wrapper",
       div(class = "content",
-          titlePanel("ETI Calculator for Research Tasks"),
+          titlePanel("FTE Calculator for Research Tasks"),
           tabsetPanel(
             tabPanel("Input Instructions",
                      br(),
@@ -88,15 +88,15 @@ ui <- fluidPage(
                        tags$li(strong("member:"), " Team member name."),
                        tags$li(strong("start_month:"), " Starting month of the task - numeric value (e.g., 15 for the 15th month of the project)."),
                        tags$li(strong("total_months:"), " Total task duration, in months."),
-                       tags$li(strong("eti_percentage:"), " The ETI percentage dedicated by the team member (as a whole number, e.g., 50 for 50%).")
+                       tags$li(strong("eti_percentage:"), " The FTE percentage dedicated by the team member (as a whole number, e.g., 50 for 50%).")
                      )
             ),
             
-            tabPanel("ETI Calculation",
+            tabPanel("FTE Calculation",
                      br(),
                      fileInput("file", "Upload Excel File", accept = c(".xlsx")),
                      selectInput("sheet", "Select Sheet", choices = NULL, selected = NULL),
-                     actionButton("process", "Calculate ETIs"),
+                     actionButton("process", "Calculate FTEs"),
                      
                      br(),
                      
@@ -111,7 +111,7 @@ ui <- fluidPage(
                      tableOutput("eti_table"),
                      
                      br(),
-                     h4("Results | Total ETIs Per Task"),
+                     h4("Results | Total FTEs Per Task"),
                      tableOutput("total_eti_table")
             )
           )
