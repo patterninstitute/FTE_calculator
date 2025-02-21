@@ -46,60 +46,85 @@ validate_and_process_data <- function(data) {
 
 # Define UI with tab panels
 ui <- fluidPage(
-  titlePanel("ETI Calculator for Research Tasks"),
-
-  tabsetPanel(
-    tabPanel("Input Instructions",
-             br(),
-             fluidRow(
-               column(6,
-                      img(src = "timeline_and_expected_table_example.png", width = "100%") # Change to actual image file
-               )
-             ),
-             br(),
-             h4("Column Descriptions"),
-             tags$ul(
-               tags$li(strong("task:"), " Task name."),
-               tags$li(strong("member:"), " Team member name."),
-               tags$li(strong("start_month:"), " Starting month of the task - numeric value (e.g., 15 for the 15th month of the project)."),
-               tags$li(strong("total_months:"), " Total task duration, in months."),
-               tags$li(strong("eti_percentage:"), " The ETI percentage dedicated by the team member (as a whole number, e.g., 50 for 50%).")
-             )
-    ),
-
-    tabPanel("ETI Calculation",
-             br(),
-             fileInput("file", "Upload Excel File", accept = c(".xlsx")),
-             selectInput("sheet", "Select Sheet", choices = NULL, selected = NULL),
-             actionButton("process", "Calculate ETIs"),
-
-             br(),
-
-             # Show error message only when needed
-             conditionalPanel(
-               condition = "output.show_error_message == true",
-               div(style = "color: red; font-weight: bold; margin-top: 10px;",
-                   textOutput("error_message"))
-             ),
-
-             br(),
-             h4("Results | Person*Month "),
-             tableOutput("eti_table"),
-
-             br(),
-             h4("Results | Total ETIs Per Task"),
-             tableOutput("total_eti_table")
-    ),
-    # Footer
-    tags$footer(
-      tags$p(
-        "Author: Isabel Duarte | ",
-        tags$a(href = "https://github.com/patterninstitute/FTE_calculator", "View on GitHub"),
-        style = "text-align: center; padding: 10px; font-size: 14px; background-color: #f8f9fa; width: 100%; position: absolute; bottom: 0;"
+  tags$head(
+    tags$style(HTML("
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .content {
+        flex: 1;
+      }
+      .footer {
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        background-color: #f8f9fa;
+        width: 100%;
+      }
+    "))
+  ),
+  div(class = "wrapper",
+      div(class = "content",
+          titlePanel("ETI Calculator for Research Tasks"),
+          tabsetPanel(
+            tabPanel("Input Instructions",
+                     br(),
+                     fluidRow(
+                       column(6,
+                              img(src = "timeline_and_expected_table_example.png", width = "100%")
+                       )
+                     ),
+                     br(),
+                     h4("Column Descriptions"),
+                     tags$ul(
+                       tags$li(strong("task:"), " Task name."),
+                       tags$li(strong("member:"), " Team member name."),
+                       tags$li(strong("start_month:"), " Starting month of the task - numeric value (e.g., 15 for the 15th month of the project)."),
+                       tags$li(strong("total_months:"), " Total task duration, in months."),
+                       tags$li(strong("eti_percentage:"), " The ETI percentage dedicated by the team member (as a whole number, e.g., 50 for 50%).")
+                     )
+            ),
+            
+            tabPanel("ETI Calculation",
+                     br(),
+                     fileInput("file", "Upload Excel File", accept = c(".xlsx")),
+                     selectInput("sheet", "Select Sheet", choices = NULL, selected = NULL),
+                     actionButton("process", "Calculate ETIs"),
+                     
+                     br(),
+                     
+                     conditionalPanel(
+                       condition = "output.show_error_message == true",
+                       div(style = "color: red; font-weight: bold; margin-top: 10px;",
+                           textOutput("error_message"))
+                     ),
+                     
+                     br(),
+                     h4("Results | Person*Month "),
+                     tableOutput("eti_table"),
+                     
+                     br(),
+                     h4("Results | Total ETIs Per Task"),
+                     tableOutput("total_eti_table")
+            )
+          )
+      ),
+      tags$footer(class = "footer",
+                  tags$p(
+                    "Author: Isabel Duarte | ",
+                    tags$a(href = "https://github.com/patterninstitute/FTE_calculator", "View on GitHub")
+                  )
       )
-    )
   )
 )
+
 
 # Define Server
 server <- function(input, output, session) {
